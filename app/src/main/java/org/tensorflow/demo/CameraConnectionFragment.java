@@ -78,7 +78,8 @@ public class CameraConnectionFragment extends Fragment {
   private static final int static_preview_width = 2560;
   private static final int static_preview_height = 1800;
 
-  private RecognitionScoreView scoreView;
+  //스코어 뷰어 주석 처리
+  //private RecognitionScoreView scoreView;
 
   private BoundingBoxView boundingBoxView;
 
@@ -104,6 +105,7 @@ public class CameraConnectionFragment extends Fragment {
         @Override
         public void onSurfaceTextureAvailable(
             final SurfaceTexture texture, final int width, final int height) {
+          System.out.println("camera size : " + width + ", " + height);
           openCamera(width, height);
         }
 
@@ -310,7 +312,8 @@ public class CameraConnectionFragment extends Fragment {
   @Override
   public void onViewCreated(final View view, final Bundle savedInstanceState) {
     textureView = (AutoFitTextureView) view.findViewById(R.id.texture);
-    scoreView = (RecognitionScoreView) view.findViewById(R.id.results);
+    //스코어 뷰어 주석 처리
+    //scoreView = (RecognitionScoreView) view.findViewById(R.id.results);
     boundingBoxView = (BoundingBoxView) view.findViewById(R.id.bounding);
   }
 
@@ -574,8 +577,11 @@ public class CameraConnectionFragment extends Fragment {
     }
 
     LOGGER.i("Getting assets.");
+
+    //스코어 뷰어 주석 처리
+    //tfPreviewListener.initialize(getActivity().getAssets(),scoreView, boundingBoxView, inferenceHandler, sensorOrientation);
     tfPreviewListener.initialize(
-        getActivity().getAssets(), scoreView, boundingBoxView, inferenceHandler, sensorOrientation);
+        getActivity().getAssets(), boundingBoxView, inferenceHandler, sensorOrientation);
     LOGGER.i("TensorFlow initialized.");
   }
 

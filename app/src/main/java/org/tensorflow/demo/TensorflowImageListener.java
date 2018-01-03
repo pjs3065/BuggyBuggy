@@ -78,12 +78,13 @@ class TensorFlowImageListener implements OnImageAvailableListener {
   private boolean readyForNextImage = true;
   private Handler handler;
 
-  private RecognitionScoreView scoreView;
+  //scoreView 주석처리
+  //private RecognitionScoreView scoreView;
   private BoundingBoxView boundingView;
 
   public void initialize(
       final AssetManager assetManager,
-      final RecognitionScoreView scoreView,
+      //final RecognitionScoreView scoreView,
       final BoundingBoxView boundingView,
       final Handler handler,
       final Integer sensorOrientation) {
@@ -91,7 +92,7 @@ class TensorFlowImageListener implements OnImageAvailableListener {
     tensorflow.initializeTensorFlow(
         assetManager, MODEL_FILE, LABEL_FILE, NUM_CLASSES, INPUT_SIZE, IMAGE_MEAN, IMAGE_STD,
         INPUT_NAME, OUTPUT_NAME);
-    this.scoreView = scoreView;
+    //this.scoreView = scoreView;
     this.boundingView = boundingView;
     this.handler = handler;
     this.sensorOrientation = sensorOrientation;
@@ -211,7 +212,8 @@ class TensorFlowImageListener implements OnImageAvailableListener {
             for (final Classifier.Recognition result : results) {
               LOGGER.v("Result: " + result.getTitle());
             }
-            scoreView.setResults(results);
+            //scoreView 주석처리
+            //scoreView.setResults(results);
             boundingView.setResults(results);
 
             computing = false;

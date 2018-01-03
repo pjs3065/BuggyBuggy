@@ -60,7 +60,6 @@ public class BoundingBoxView extends View {
         float view_height = Math.max(view_height_temp, view_width_temp);
         float view_width = Math.min(view_height_temp, view_width_temp);
 
-        //기기 카메라 사이즈
         String prediction_string = "width: " + Float.toString(view_width) +
                 " height: " + Float.toString(view_height);
         Log.v("BoundingBox", prediction_string);
@@ -88,7 +87,6 @@ public class BoundingBoxView extends View {
                 bounding_x += offset_x;
                 bounding_y += offset_y;
 
-
                 box_width *= size_multiplier_x;
                 box_height *= size_multiplier_y;
                 bounding_x -= box_width;
@@ -102,28 +100,28 @@ public class BoundingBoxView extends View {
                 //convert image
                 Drawable d = getResources().getDrawable(R.drawable.lava);
 
-                canvas.drawRect(boundingBox, fgPaint);
-                canvas.drawRect(boundingBox, bgPaint);
-
                 // Create class name text on bounding box.
                 String class_name = recog.getTitle();
 
                 // class_name의 title을 받아와서 person이면 사진을 띄어준다.
-                if(class_name.equals("person"))
-                {
-                    d.setBounds((int)bounding_x,(int)bounding_y,(int)bounding_x2,(int)bounding_y2);
+                if(class_name.equals("person")) {
+                    //임시로 bug로 프로토타입 지정
+                    class_name = "bug";
+                    canvas.drawRect(boundingBox, fgPaint);
+                    canvas.drawRect(boundingBox, bgPaint);
+
+                    d.setBounds((int) bounding_x, (int) bounding_y, (int) bounding_x2, (int) bounding_y2);
                     d.draw(canvas);
+                    //System.out.println( "test" + class_name);
+
+                    float text_width = textPaint.measureText(class_name) / 2;
+                    float text_size = textPaint.getTextSize();
+                    float text_center_x = bounding_x - 2;
+                    float text_center_y = bounding_y - text_size;
+                    textPaint.setTextAlign(Paint.Align.CENTER);
+                    canvas.drawRect(text_center_x, text_center_y, text_center_x + 2 * text_width, text_center_y + text_size, trPaint);
+                    canvas.drawText(class_name, text_center_x + text_width, text_center_y + text_size, textPaint);
                 }
-                //System.out.println( "test" + class_name);
-
-                float text_width = textPaint.measureText(class_name)/2;
-                float text_size = textPaint.getTextSize();
-                float text_center_x = bounding_x - 2;
-                float text_center_y = bounding_y - text_size;
-                textPaint.setTextAlign(Paint.Align.CENTER);
-                canvas.drawRect(text_center_x, text_center_y, text_center_x + 2 * text_width, text_center_y + text_size, trPaint);
-                canvas.drawText(class_name, text_center_x + text_width, text_center_y + text_size, textPaint);
-
             }
         }
     }
