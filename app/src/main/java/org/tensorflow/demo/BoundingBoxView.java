@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -59,6 +60,7 @@ public class BoundingBoxView extends View {
         float view_height = Math.max(view_height_temp, view_width_temp);
         float view_width = Math.min(view_height_temp, view_width_temp);
 
+        //기기 카메라 사이즈
         String prediction_string = "width: " + Float.toString(view_width) +
                 " height: " + Float.toString(view_height);
         Log.v("BoundingBox", prediction_string);
@@ -97,11 +99,23 @@ public class BoundingBoxView extends View {
                 // Create new bounding box and draw it.
                 RectF boundingBox = new RectF(bounding_x, bounding_y, bounding_x2, bounding_y2);
 
+                //convert image 
+                Drawable d = getResources().getDrawable(R.drawable.koala);
+
                 canvas.drawRect(boundingBox, fgPaint);
                 canvas.drawRect(boundingBox, bgPaint);
 
                 // Create class name text on bounding box.
                 String class_name = recog.getTitle();
+
+                // class_name의 title을 받아와서 person이면 사진을 띄어준다.
+                if(class_name.equals("person"))
+                {
+                    d.setBounds((int)bounding_x,(int)bounding_y,(int)bounding_x2,(int)bounding_y2);
+                    d.draw(canvas);
+                }
+                //System.out.println( "test" + class_name);
+
                 float text_width = textPaint.measureText(class_name)/2;
                 float text_size = textPaint.getTextSize();
                 float text_center_x = bounding_x - 2;
