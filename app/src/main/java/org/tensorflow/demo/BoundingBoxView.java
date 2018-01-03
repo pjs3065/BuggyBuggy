@@ -99,8 +99,8 @@ public class BoundingBoxView extends View {
                 // Create new bounding box and draw it.
                 RectF boundingBox = new RectF(bounding_x, bounding_y, bounding_x2, bounding_y2);
 
-                //convert image 
-                Drawable d = getResources().getDrawable(R.drawable.koala);
+                //convert image
+                Drawable d = getResources().getDrawable(R.drawable.lava);
 
                 canvas.drawRect(boundingBox, fgPaint);
                 canvas.drawRect(boundingBox, bgPaint);
